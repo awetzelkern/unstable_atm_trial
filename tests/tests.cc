@@ -120,3 +120,21 @@ TEST_CASE("User DNE", "[test-8]") {
   REQUIRE_THROWS_AS(atm.PrintLedger("./new_promt.txt", 1, 1),
                     std::invalid_argument);
 }
+
+TEST_CASE("Deposit increases balance and records transaction",
+          "[test-deposit-ok]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+
+  atm.DepositCash(12345678, 1234, 50.00);
+
+  auto accounts = atm.GetAccounts();
+  Account sam_account = accounts[{12345678, 1234}];
+  REQUIRE(sam_account.balance == Approx(350.30));
+
+  auto transactions = atm.GetTransactions();
+  auto& log = transactions[{12345678, 1234}];
+  REQUIRE_FALSE(log.empty());
+  REQUIRE(log.back().find("Deposit - Amount: $50.00") != std::string::npos);
+  REQUIRE(log.back().find("Updated Balance: $350.30") != std::string::npos);
+}
