@@ -95,7 +95,7 @@ TEST_CASE("Deposit negative cash", "[test-3]") {
   REQUIRE_THROWS_AS(atm.DepositCash(12345678, 1234, -20),
                     std::invalid_argument);
 }
-/*
+
 TEST_CASE("User doesn't exist withdrawl", "[test-4]") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
@@ -120,4 +120,3 @@ TEST_CASE("User DNE", "[test-8]") {
   REQUIRE_THROWS_AS(atm.PrintLedger("./new_promt.txt", 1, 1),
                     std::invalid_argument);
 }
-*/
