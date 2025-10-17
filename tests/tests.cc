@@ -74,3 +74,11 @@ TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
   atm.PrintLedger("./prompt.txt", 12345678, 1234);
   REQUIRE(CompareFiles("./ex-1.txt", "./prompt.txt"));
 }
+
+// my test cases
+TEST_CASE("Withdraw negative cash", "[test-1]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(-12345678, 1234, 20),
+                    std::invalid_argument);
+}
