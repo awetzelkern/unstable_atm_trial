@@ -115,9 +115,8 @@ TEST_CASE("User Already exists", "[test-6]") {
                     std::invalid_argument);
 }
 
-TEST_CASE("User doesn't exist printledger", "[test-7]") {
+TEST_CASE("User DNE", "[test-8]") {
   Atm atm;
-  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
   REQUIRE_THROWS_AS(atm.PrintLedger("./new_promt.txt", 1, 1),
                     std::invalid_argument);
 }
