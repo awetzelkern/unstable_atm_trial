@@ -79,7 +79,45 @@ TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
 TEST_CASE("Withdraw negative cash", "[test-1]") {
   Atm atm;
   atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
-  REQUIRE_THROWS_AS(atm.WithdrawCash(-12345678, 1234, 20),
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 1234, -20),
                     std::invalid_argument);
 }
-// modified
+
+TEST_CASE("Withdraw too much cash", "[test-2]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 1234, 400), std::runtime_error);
+}
+
+TEST_CASE("Deposit negative cash", "[test-3]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.DepositCash(12345678, 1234, -20),
+                    std::invalid_argument);
+}
+
+TEST_CASE("User doesn't exist withdrawl", "[test-4]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(1, 1, 20), std::invalid_argument);
+}
+
+TEST_CASE("User doesn't exist deposit", "[test-5]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.DepositCash(1, 1, 20), std::invalid_argument);
+}
+
+TEST_CASE("User Already exists", "[test-6]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30),
+                    std::invalid_argument);
+}
+
+TEST_CASE("User doesn't exist printledger", "[test-7]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.PrintLedger("./prompt.txt", 12345678, 1234),
+                    std::invalid_argument);
+}
