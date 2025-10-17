@@ -82,3 +82,4 @@ TEST_CASE("Withdraw negative cash", "[test-1]") {
   REQUIRE_THROWS_AS(atm.WithdrawCash(-12345678, 1234, 20),
                     std::invalid_argument);
 }
+// modified
